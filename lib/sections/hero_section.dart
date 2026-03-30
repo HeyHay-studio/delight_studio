@@ -82,7 +82,7 @@ class HeroSection extends StatelessWidget {
       return Positioned(
         left: 0,
         right: 0,
-        bottom: 10,
+        bottom: 0,
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
