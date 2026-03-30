@@ -40,6 +40,7 @@ class HeroSection extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            if (isMobile) SizedBox(height: 60),
             Text(
               'Welcome to Delight Studio\nWhere Moments Become Memories',
               textAlign: TextAlign.center,
@@ -81,7 +82,7 @@ class HeroSection extends StatelessWidget {
       return Positioned(
         left: 0,
         right: 0,
-        bottom: 60,
+        bottom: 20,
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
