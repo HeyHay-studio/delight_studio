@@ -1,20 +1,34 @@
 #!/bin/bash
+set -e # Exit on error
+set -x # Print commands (for debugging)
 
-# 1. Optimization: Use a shallow clone for faster setup
+# 1. Setup Flutter SDK
 if [ ! -d "flutter" ]; then
-  echo ">>> Downloading Flutter SDK (Stable Channel)..."
+  echo ">>> Downloading Flutter SDK..."
   git clone https://github.com/flutter/flutter.git -b stable --depth 1
 fi
 
-# 2. Add Flutter to PATH for this session
 export PATH="$PATH:$(pwd)/flutter/bin"
 
-# 3. Pre-load dependencies and verify
-echo ">>> Running Flutter Doctor..."
-flutter doctor
+# 2. Diagnostic: Check environment
+echo ">>> Environment Check:"
+flutter --version
+which flutter
 
-# 4. Build the Web Application
-echo ">>> Building Production Web Bundle..."
+# 3. Clean and get dependencies (Ensures fresh state)
+echo ">>> Preparing project..."
+flutter pub get
+
+# 4. Build for Web
+echo ">>> Starting Build..."
 flutter build web --release --base-href "/"
 
-echo ">>> Build Complete. Assets are in build/web"
+# 5. Verification: List output to ensure files exist
+echo ">>> Verifying build output..."
+if [ -d "build/web" ]; then
+  ls -la build/web
+  echo ">>> Build successfully generated in build/web"
+else
+  echo ">>> ERROR: build/web directory not found!"
+  exit 1
+fi
