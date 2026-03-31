@@ -14,7 +14,7 @@ class AboutSection extends StatelessWidget {
         vertical: 100,
         horizontal: isMobile ? 30 : width * 0.15,
       ),
-      color: Colors.black,
+      color: Colors.black45.withAlpha(80),
       child: Column(
         children: [
           Row(
@@ -65,11 +65,12 @@ class AboutSection extends StatelessWidget {
     return Container(
       height: 400,
       decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/delight.png"),
+          fit: BoxFit.cover,
+        ),
         color: const Color(0xFF1E1E1E),
         border: Border.all(color: Colors.white12, width: 1),
-      ),
-      child: const Center(
-        child: Icon(Icons.camera_alt_outlined, color: Colors.white24, size: 80),
       ),
     ).animate().fadeIn(duration: 800.ms).slideX(begin: -0.1, end: 0);
   }
@@ -81,7 +82,7 @@ class AboutSection extends StatelessWidget {
         Text('Our Story', style: Theme.of(context).textTheme.headlineMedium),
         const SizedBox(height: 25),
         Text(
-          'Founded by a group of passionate visual storytellers, Wedshoot began with a simple mission: to capture the raw, unscripted beauty of love. We believe that every wedding has its own unique rhythm, and our job is to find those quiet, profound moments that often go unnoticed.',
+          'Founded by a group of passionate visual storytellers, Delight Studio began with a simple mission: to capture the raw, unscripted beauty of love. We believe that every wedding has its own unique rhythm, and our job is to find those quiet, profound moments that often go unnoticed.',
           style: Theme.of(context).textTheme.bodyMedium,
         ),
         const SizedBox(height: 20),

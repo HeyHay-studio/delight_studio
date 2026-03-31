@@ -94,14 +94,21 @@ class _DesktopMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.max,
       children: [
         _MenuItem(title: 'HOME', onTap: () => onNavTap('home')),
         _MenuItem(title: 'ABOUT', onTap: () => onNavTap('about')),
+        SizedBox(width: 20),
+        _CTAButton()
+            .animate(onPlay: (controller) => controller.repeat())
+            .shimmer(
+              duration: 6.seconds,
+              colors: [Colors.black54, Colors.white60, Colors.black54],
+            ),
+        SizedBox(width: 20),
         _MenuItem(title: 'GALLERY', onTap: () => onNavTap('gallery')),
         _MenuItem(title: 'PACKAGES', onTap: () => onNavTap('packages')),
-        _MenuItem(title: 'CONTACT', onTap: () => onNavTap('contact')),
         const SizedBox(width: 20),
-        _CTAButton(),
       ],
     );
   }
@@ -138,14 +145,14 @@ class _CTAButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 150, sigmaY: 150),
+        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.1),
+              color: Colors.white30.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.black38.withAlpha(30), width: 2),
+              border: Border.all(color: Colors.black.withAlpha(30), width: 2),
             ),
             child: GestureDetector(
               onTap: () {},

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:delight_studio/services/social_services.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,7 +36,7 @@ class FooterSection extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildBrandCol(),
+          _buildBrandCol(isMobile),
           const SizedBox(height: 40),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +53,7 @@ class FooterSection extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(flex: 2, child: _buildBrandCol()),
+        Expanded(flex: 2, child: _buildBrandCol(isMobile)),
         const SizedBox(width: 40),
         Expanded(child: _buildLinksPageCol()),
         const SizedBox(width: 40),
@@ -63,7 +64,7 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildBrandCol() {
+  Widget _buildBrandCol(bool isMobile) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -78,7 +79,9 @@ class FooterSection extends StatelessWidget {
         ),
         const SizedBox(height: 25),
         Text(
-          'Stay connected with Delight Studio Photography for exclusive behind-the-scenes, wedding inspiration, and expert tips to capture your special day perfectly.',
+          'Stay connected with Delight Studio Photography for exclusive '
+          'behind-the-scenes, wedding inspiration, and expert tips to '
+          'capture your special day perfectly.',
           style: GoogleFonts.montserrat(
             color: Colors.white54,
             fontSize: 13,
@@ -87,11 +90,21 @@ class FooterSection extends StatelessWidget {
         ),
         const SizedBox(height: 30),
         Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _SocialIcon(icon: FontAwesomeIcons.facebook),
-            _SocialIcon(icon: FontAwesomeIcons.instagram),
-            _SocialIcon(icon: FontAwesomeIcons.xTwitter),
-            _SocialIcon(icon: FontAwesomeIcons.tiktok),
+            _SocialIcon(
+              icon: FontAwesomeIcons.facebook,
+              onTap: () => SocialsService.launchFacebook("delight"),
+            ),
+            _SocialIcon(
+              icon: FontAwesomeIcons.instagram,
+              onTap: () => SocialsService.launchInstagram("delightstudiogh"),
+            ),
+            _SocialIcon(icon: FontAwesomeIcons.xTwitter, onTap: () {}),
+            _SocialIcon(icon: FontAwesomeIcons.tiktok, onTap: () {}),
+            _SocialIcon(icon: FontAwesomeIcons.envelope, onTap: () {}),
+            if (!isMobile) SizedBox(width: 40),
           ],
         ),
       ],
@@ -107,8 +120,6 @@ class FooterSection extends StatelessWidget {
         _FooterLink(text: 'About'),
         _FooterLink(text: 'Gallery'),
         _FooterLink(text: 'Packages'),
-        _FooterLink(text: 'Features'),
-        _FooterLink(text: 'Pricing'),
       ],
     );
   }
@@ -119,7 +130,6 @@ class FooterSection extends StatelessWidget {
       children: const [
         _FooterLink(text: 'Help', isTitle: true),
         _FooterLink(text: 'Contact us'),
-        _FooterLink(text: 'FAQs'),
         _FooterLink(text: 'Availability'),
         _FooterLink(text: 'Privacy Policy'),
         _FooterLink(text: 'Terms of Services'),
@@ -134,7 +144,8 @@ class FooterSection extends StatelessWidget {
         const _FooterLink(text: 'Subscribe To Our Newsletters', isTitle: true),
         const SizedBox(height: 10),
         Text(
-          'Join our community and be the first to receive exclusive offers, photography tips, and heartwarming stories straight to your inbox.',
+          'Join our community and be the first to receive exclusive offers,'
+          ' photography tips, and heartwarming stories straight to your inbox.',
           style: GoogleFonts.montserrat(
             color: Colors.white54,
             fontSize: 13,
@@ -245,23 +256,13 @@ class FooterSection extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.white12, width: 1),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'English',
-                      style: GoogleFonts.montserrat(
-                        color: Colors.white,
-                        fontSize: 11,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    const Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Colors.white54,
-                      size: 14,
-                    ),
-                  ],
+                child: Text(
+                  'English',
+                  style: GoogleFonts.montserrat(
+                    color: Colors.white,
+                    fontWeight: FontWeight(400),
+                    fontSize: 11,
+                  ),
                 ),
               ),
             ],
@@ -282,12 +283,15 @@ class _FooterLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: isTitle ? 20 : 12),
-      child: Text(
-        text,
-        style: GoogleFonts.montserrat(
-          color: isTitle ? Colors.white : Colors.white54,
-          fontSize: isTitle ? 16 : 13,
-          fontWeight: isTitle ? FontWeight.bold : FontWeight.normal,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: Text(
+          text,
+          style: GoogleFonts.montserrat(
+            color: isTitle ? Colors.white : Colors.white54,
+            fontSize: isTitle ? 16 : 13,
+            fontWeight: isTitle ? FontWeight.bold : FontWeight.normal,
+          ),
         ),
       ),
     );
@@ -296,14 +300,21 @@ class _FooterLink extends StatelessWidget {
 
 class _SocialIcon extends StatelessWidget {
   final dynamic icon;
+  final VoidCallback onTap;
 
-  const _SocialIcon({required this.icon});
+  const _SocialIcon({required this.icon, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 15),
-      child: FaIcon(icon, color: Colors.white54, size: 16),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.only(right: 15),
+          child: FaIcon(icon, color: Colors.white54, size: 16),
+        ),
+      ),
     );
   }
 }
