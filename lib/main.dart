@@ -4,7 +4,7 @@ import 'package:delight_studio/sections/features_section.dart';
 import 'package:delight_studio/sections/footer_section.dart';
 import 'package:delight_studio/sections/gallery_section.dart';
 import 'package:delight_studio/sections/hero_section.dart';
-import 'package:delight_studio/sections/packages_section.dart';
+import 'package:delight_studio/sections/services_section.dart';
 import 'package:delight_studio/theme/app_theme.dart';
 import 'package:delight_studio/widgets/mobile_menu.dart';
 import 'package:delight_studio/widgets/top_navigation.dart';
@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                 FeaturesSection(key: servicesKey),
                 AboutSection(key: aboutKey),
                 GallerySection(key: galleryKey),
-                PackagesSection(key: packagesKey),
+                ServicesSection(key: packagesKey),
                 ContactSection(key: contactKey),
                 const FooterSection(),
               ],

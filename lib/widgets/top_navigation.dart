@@ -107,7 +107,7 @@ class _DesktopMenu extends StatelessWidget {
             ),
         SizedBox(width: 20),
         _MenuItem(title: 'GALLERY', onTap: () => onNavTap('gallery')),
-        _MenuItem(title: 'PACKAGES', onTap: () => onNavTap('packages')),
+        _MenuItem(title: 'SERVICES', onTap: () => onNavTap('packages')),
         const SizedBox(width: 20),
       ],
     );
