@@ -221,30 +221,3 @@ class _FeatureCard extends StatelessWidget {
     );
   }
 }
-
-class _GetAQuoteButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
-          decoration: BoxDecoration(
-            color: Colors.white.withAlpha(10),
-            border: Border.all(color: Colors.white24, width: 1.5),
-          ),
-          child: Text(
-            'GET A QUOTE',
-            style: GoogleFonts.montserrat(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-              letterSpacing: 1.1,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}

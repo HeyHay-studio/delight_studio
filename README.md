@@ -59,6 +59,23 @@ Every primary interactive element—from the **Top Navigation Bar** to the **Fea
 
 ---
 
+## 🚀 Deployment
+
+### Option 1: Vercel (Automatic Deployment)
+To deploy this project to Vercel with automatic builds:
+1.  **Connect your GitHub Repository** to the [Vercel Dashboard](https://vercel.com).
+2.  In the **Build & Development Settings**, configure:
+    - **Framework Preset**: `Other`
+    - **Build Command**: `bash install-flutter.sh`
+    - **Output Directory**: `build/web`
+    - **Install Command**: `flutter pub get` (or leave empty, the script handles it)
+3.  Click **Deploy**. Vercel will install Flutter and build the site.
+
+### Option 2: GitHub Pages (Automatic)
+The project is already configured with a GitHub Actions workflow in `.github/workflows/deploy.yml`. Merging changes into the `master` branch will automatically deploy to GitHub Pages.
+
+---
+
 ## 📂 Project Structure
 
 - `lib/main.dart`: Root entry point and main section coordinator.
