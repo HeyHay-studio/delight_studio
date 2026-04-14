@@ -43,8 +43,13 @@ class GallerySection extends StatelessWidget {
 class _GalleryImage extends StatelessWidget {
   final String assetPath;
   final int delay;
+  final bool? isNetwork;
 
-  const _GalleryImage({required this.assetPath, required this.delay});
+  const _GalleryImage({
+    required this.assetPath,
+    required this.delay,
+    this.isNetwork = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,23 +61,37 @@ class _GalleryImage extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Image.asset(
-                assetPath,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => const Center(
-                  child: Icon(
-                    Icons.broken_image_outlined,
-                    color: Colors.white24,
-                    size: 50,
-                  ),
-                ),
-              ),
+              isNetwork!
+                  ? Image.network(
+                      assetPath,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) =>
+                          const Center(
+                            child: Icon(
+                              Icons.broken_image_outlined,
+                              color: Colors.white24,
+                              size: 50,
+                            ),
+                          ),
+                    )
+                  : Image.asset(
+                      assetPath,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) =>
+                          const Center(
+                            child: Icon(
+                              Icons.broken_image_outlined,
+                              color: Colors.white24,
+                              size: 50,
+                            ),
+                          ),
+                    ),
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
-                    colors: [Colors.black.withOpacity(0.8), Colors.transparent],
+                    colors: [Colors.black.withAlpha(80), Colors.transparent],
                   ),
                 ),
               ),

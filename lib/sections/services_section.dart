@@ -17,7 +17,14 @@ class ServicesSection extends StatelessWidget {
         vertical: 100,
         horizontal: isMobile ? 30 : width * 0.1,
       ),
-      color: AppTheme.surfaceCard,
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceCard,
+        image: DecorationImage(
+          image: AssetImage('assets/services.png'),
+          fit: BoxFit.cover,
+          filterQuality: FilterQuality.high,
+        ),
+      ),
       child: Column(
         children: [
           Text(
@@ -213,15 +220,15 @@ class _PackageButton extends StatelessWidget {
     return Center(
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        child: Container(
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.white.withAlpha(100), width: 2),
-          ),
-          child: GestureDetector(
-            onTap: onTap,
+        child: GestureDetector(
+          onTap: onTap,
+          child: Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.white.withAlpha(100), width: 2),
+            ),
             child:
                 Text(
                       'SELECT PACKAGE',

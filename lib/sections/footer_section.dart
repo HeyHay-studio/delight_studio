@@ -236,6 +236,37 @@ class FooterSection extends StatelessWidget {
                   letterSpacing: 1.5,
                 ),
               ),
+              const SizedBox(height: 50),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: .center,
+                children: [
+                  Text(
+                    'Developed By:',
+                    style: GoogleFonts.bellefair(
+                      color: Colors.white30,
+                      fontSize: 8,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                  Text(
+                    'HeyHay Studio',
+                    style: GoogleFonts.bellefair(
+                      color: Colors.white54,
+                      fontSize: 10,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                  Text(
+                    '®',
+                    style: GoogleFonts.bellefair(
+                      color: Colors.white30,
+                      fontSize: 6,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                ],
+              ),
             ] else
               Text(
                 '© 2026 DELIGHT STUDIO. ALL RIGHTS RESERVED.',
@@ -264,6 +295,37 @@ class FooterSection extends StatelessWidget {
                     fontSize: 11,
                   ),
                 ),
+              ),
+              const SizedBox(height: 50),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: .center,
+                children: [
+                  Text(
+                    'Developed By:',
+                    style: GoogleFonts.bellefair(
+                      color: Colors.white30,
+                      fontSize: 10,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                  Text(
+                    'HeyHay Studio',
+                    style: GoogleFonts.bellefair(
+                      color: Colors.white54,
+                      fontSize: 12,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                  Text(
+                    '®',
+                    style: GoogleFonts.bellefair(
+                      color: Colors.white30,
+                      fontSize: 9,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                ],
               ),
             ],
           ],
