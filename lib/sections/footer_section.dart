@@ -80,49 +80,6 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildNewsletterCol() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const _FooterLink(text: 'Subscribe To Our Newsletters', isTitle: true),
-        const SizedBox(height: 10),
-        Text(
-          'Join our community and be the first to receive exclusive offers,'
-          ' photography tips, and heartwarming stories straight to your inbox.',
-          style: GoogleFonts.montserrat(
-            color: Colors.white54,
-            fontSize: 13,
-            height: 1.6,
-          ),
-        ),
-        const SizedBox(height: 25),
-        // Use a Wrap or a Column instead of conditional Flex to be safer
-        LayoutBuilder(
-          builder: (context, constraints) {
-            bool useVertical = constraints.maxWidth < 400;
-            if (useVertical) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _buildEmailInput(),
-                  const SizedBox(height: 15),
-                  _SubscribeButton(),
-                ],
-              );
-            }
-            return Row(
-              children: [
-                Expanded(child: _buildEmailInput()),
-                const SizedBox(width: 15),
-                _SubscribeButton(),
-              ],
-            );
-          },
-        ),
-      ],
-    );
-  }
-
   Widget _buildEmailInput() {
     return ClipRRect(
       borderRadius: BorderRadius.circular(4),
@@ -256,35 +213,6 @@ class FooterSection extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-}
-
-class _FooterLink extends StatelessWidget {
-  final String text;
-  final bool isTitle;
-  final VoidCallback? onTap;
-
-  const _FooterLink({required this.text, this.isTitle = false, this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: EdgeInsets.only(bottom: isTitle ? 20 : 12),
-        child: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: Text(
-            text,
-            style: GoogleFonts.montserrat(
-              color: isTitle ? Colors.white : Colors.white54,
-              fontSize: isTitle ? 16 : 13,
-              fontWeight: isTitle ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
