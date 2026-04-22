@@ -1,8 +1,12 @@
 import 'package:delight_studio/core/constants.dart';
+import 'package:delight_studio/sections/special_package.dart';
 import 'package:delight_studio/theme/app_theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../widgets/package_card.dart';
 
 class ServicesSection extends StatelessWidget {
   const ServicesSection({super.key});
@@ -20,7 +24,7 @@ class ServicesSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.surfaceCard,
         image: DecorationImage(
-          image: AssetImage('assets/services.png'),
+          image: AssetImage('assets/services.jpg'),
           fit: BoxFit.cover,
           filterQuality: FilterQuality.high,
         ),
@@ -59,6 +63,64 @@ class ServicesSection extends StatelessWidget {
             AppConstants.corporateServices,
             isMobile,
           ),
+          const SizedBox(height: 100),
+          TextButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    CupertinoDialogRoute(
+                      context: context,
+                      builder: (context) => SpecialPackage(isMobile: isMobile),
+                    ),
+                  );
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.white.withAlpha(5),
+                  foregroundColor: AppTheme.fontWhite,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 18,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    side: BorderSide(
+                      color: const Color(0xFFD4AF37).withAlpha(100),
+                      width: 1,
+                    ),
+                  ),
+                ),
+                icon: Icon(
+                  CupertinoIcons.photo_camera,
+                  size: 18,
+                  color: AppTheme.primarySilver,
+                ),
+                // Changed to star for 'Special'
+                label: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'OUR SPECIAL PACKAGE',
+                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                        fontSize: 14, // Adjusting scale for button context
+                        color: AppTheme.fontGrey,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 2.5,
+                      ),
+                    ).animate().fadeIn(duration: 600.ms).slideX(begin: -0.2),
+                    const SizedBox(width: 8),
+                    const Icon(
+                      CupertinoIcons.chevron_right,
+                      size: 14,
+                      color: Color(0xFFD4AF37),
+                    ),
+                  ],
+                ),
+              )
+              .animate(onPlay: (controller) => controller.repeat())
+              .shimmer(
+                duration: 2.seconds,
+                color: AppTheme.primarySilver.withAlpha(40),
+              ),
         ],
       ),
     );
@@ -99,7 +161,7 @@ class ServicesSection extends StatelessWidget {
           final index = entry.key;
           final service = entry.value;
           return [
-            _PackageCard(
+            PackageCard(
               title: service['title'],
               description: service['description'],
               delay: service['delay'],
@@ -117,142 +179,13 @@ class ServicesSection extends StatelessWidget {
       children: services.map((service) {
         return SizedBox(
           width: 350,
-          child: _PackageCard(
+          child: PackageCard(
             title: service['title'],
             description: service['description'],
             delay: service['delay'],
           ),
         );
       }).toList(),
-    );
-  }
-}
-
-class _PackageCard extends StatefulWidget {
-  final String title;
-  final String description;
-  final int delay;
-
-  const _PackageCard({
-    required this.title,
-    required this.description,
-    required this.delay,
-  });
-
-  @override
-  State<_PackageCard> createState() => _PackageCardState();
-}
-
-class _PackageCardState extends State<_PackageCard> {
-  bool _isHovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child:
-          AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 30,
-                ),
-                transform: Matrix4.diagonal3Values(
-                  _isHovered ? 1.05 : 1.03,
-                  _isHovered ? 1.05 : 1.03,
-                  1.0,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: AppTheme.surfaceCard,
-                  border: Border.all(color: AppTheme.backgroundBlack, width: 4),
-                  boxShadow: [
-                    _isHovered
-                        ? BoxShadow(
-                            color: Colors.yellow.withAlpha(18),
-                            blurRadius: 5,
-                            spreadRadius: 1,
-                          )
-                        : BoxShadow(),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      widget.title,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 2.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      widget.description,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.openSans(
-                        fontSize: 12,
-                        color: AppTheme.fontGrey,
-                      ),
-                    ),
-                    const SizedBox(height: 60),
-                    _PackageButton(onTap: () {}),
-                  ],
-                ),
-              )
-              .animate()
-              .fadeIn(delay: widget.delay.ms, duration: 800.ms)
-              .slideY(begin: 0.1, end: 0),
-    );
-  }
-}
-
-class _PackageButton extends StatelessWidget {
-  final VoidCallback? onTap;
-
-  const _PackageButton({this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          onTap: onTap,
-          child: Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.white.withAlpha(100), width: 2),
-            ),
-            child:
-                Text(
-                      'SELECT PACKAGE',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFFC0C0C0),
-                        letterSpacing: 1.2,
-                      ),
-                    )
-                    .animate(onPlay: (controller) => controller.repeat())
-                    .shimmer(
-                      curve: Curves.easeInToLinear,
-                      duration: 12.seconds,
-                      colors: [
-                        Colors.yellow.withAlpha(60),
-                        Colors.black,
-                        Colors.yellow.withAlpha(60),
-                      ],
-                    ),
-          ),
-        ),
-      ),
     );
   }
 }

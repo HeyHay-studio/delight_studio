@@ -97,9 +97,10 @@ class _DesktopMenu extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         _MenuItem(title: 'HOME', onTap: () => onNavTap('home')),
+        SizedBox(width: 20),
         _MenuItem(title: 'ABOUT', onTap: () => onNavTap('about')),
         SizedBox(width: 20),
-        _CTAButton()
+        _CTAButton(onTap: () => onNavTap('contact'))
             .animate(onPlay: (controller) => controller.repeat())
             .shimmer(
               duration: 6.seconds,
@@ -107,6 +108,7 @@ class _DesktopMenu extends StatelessWidget {
             ),
         SizedBox(width: 20),
         _MenuItem(title: 'GALLERY', onTap: () => onNavTap('gallery')),
+        SizedBox(width: 20),
         _MenuItem(title: 'SERVICES', onTap: () => onNavTap('packages')),
         const SizedBox(width: 20),
       ],
@@ -124,6 +126,16 @@ class _MenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onTap,
+      style: TextButton.styleFrom(
+        padding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+          side: const BorderSide(color: AppTheme.fontGrey, width: 1),
+        ),
+        backgroundColor: AppTheme.primarySilver.withAlpha(5),
+        disabledBackgroundColor: AppTheme.fontGrey,
+        foregroundColor: Colors.transparent,
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Text(
@@ -141,6 +153,10 @@ class _MenuItem extends StatelessWidget {
 }
 
 class _CTAButton extends StatelessWidget {
+  final VoidCallback onTap;
+
+  const _CTAButton({required this.onTap});
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -148,14 +164,14 @@ class _CTAButton extends StatelessWidget {
         filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white30.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.black.withAlpha(30), width: 2),
-            ),
-            child: GestureDetector(
-              onTap: () {},
+          child: GestureDetector(
+            onTap: onTap,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white30.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.black.withAlpha(30), width: 2),
+              ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
@@ -186,13 +202,11 @@ class _MobileMenuIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(
-        isOpen ? Icons.close : Icons.menu,
-        color: AppTheme.fontWhite,
-        size: 30,
-      ),
-      onPressed: onToggle,
-    );
+    return isOpen
+        ? SizedBox.shrink()
+        : IconButton(
+            icon: Icon(Icons.menu, color: AppTheme.fontWhite, size: 30),
+            onPressed: onToggle,
+          );
   }
 }

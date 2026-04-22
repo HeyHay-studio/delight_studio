@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:delight_studio/services/social_services.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,40 +32,14 @@ class FooterSection extends StatelessWidget {
 
   Widget _buildResponsiveRows(bool isMobile) {
     if (isMobile) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildBrandCol(isMobile),
-          const SizedBox(height: 40),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(child: _buildLinksPageCol()),
-              Expanded(child: _buildLinksHelpCol()),
-            ],
-          ),
-          const SizedBox(height: 40),
-          _buildNewsletterCol(),
-        ],
-      );
+      return _buildBrandCol(isMobile);
     }
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(flex: 2, child: _buildBrandCol(isMobile)),
-        const SizedBox(width: 40),
-        Expanded(child: _buildLinksPageCol()),
-        const SizedBox(width: 40),
-        Expanded(child: _buildLinksHelpCol()),
-        const SizedBox(width: 40),
-        Expanded(flex: 2, child: _buildNewsletterCol()),
-      ],
-    );
+    return _buildBrandCol(isMobile);
   }
 
   Widget _buildBrandCol(bool isMobile) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           'DELIGHT STUDIO',
@@ -77,62 +50,32 @@ class FooterSection extends StatelessWidget {
             letterSpacing: 4,
           ),
         ),
-        const SizedBox(height: 25),
+        const SizedBox(height: 20),
         Text(
           'Stay connected with Delight Studio Photography for exclusive '
           'behind-the-scenes, wedding inspiration, and expert tips to '
           'capture your special day perfectly.',
+          textAlign: TextAlign.center,
           style: GoogleFonts.montserrat(
             color: Colors.white54,
             fontSize: 13,
             height: 1.6,
           ),
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 40),
         Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisSize: isMobile ? MainAxisSize.max : MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _SocialIcon(
-              icon: FontAwesomeIcons.facebook,
-              onTap: () => SocialsService.launchFacebook("delight"),
-            ),
-            _SocialIcon(
-              icon: FontAwesomeIcons.instagram,
-              onTap: () => SocialsService.launchInstagram("delightstudiogh"),
-            ),
+            _SocialIcon(icon: FontAwesomeIcons.facebook, onTap: () {}),
+            _SocialIcon(icon: FontAwesomeIcons.instagram, onTap: () {}),
             _SocialIcon(icon: FontAwesomeIcons.xTwitter, onTap: () {}),
             _SocialIcon(icon: FontAwesomeIcons.tiktok, onTap: () {}),
             _SocialIcon(icon: FontAwesomeIcons.envelope, onTap: () {}),
+            SizedBox(),
             if (!isMobile) SizedBox(width: 40),
           ],
         ),
-      ],
-    );
-  }
-
-  Widget _buildLinksPageCol() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        _FooterLink(text: 'Pages', isTitle: true),
-        _FooterLink(text: 'Home'),
-        _FooterLink(text: 'About'),
-        _FooterLink(text: 'Gallery'),
-        _FooterLink(text: 'Packages'),
-      ],
-    );
-  }
-
-  Widget _buildLinksHelpCol() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        _FooterLink(text: 'Help', isTitle: true),
-        _FooterLink(text: 'Contact us'),
-        _FooterLink(text: 'Availability'),
-        _FooterLink(text: 'Privacy Policy'),
-        _FooterLink(text: 'Terms of Services'),
       ],
     );
   }
@@ -278,24 +221,6 @@ class FooterSection extends StatelessWidget {
               ),
             if (wrapLayout) const SizedBox(height: 25),
             if (!isMobile) ...[
-              const SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white12, width: 1),
-                ),
-                child: Text(
-                  'English',
-                  style: GoogleFonts.montserrat(
-                    color: Colors.white,
-                    fontWeight: FontWeight(400),
-                    fontSize: 11,
-                  ),
-                ),
-              ),
               const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -338,21 +263,25 @@ class FooterSection extends StatelessWidget {
 class _FooterLink extends StatelessWidget {
   final String text;
   final bool isTitle;
+  final VoidCallback? onTap;
 
-  const _FooterLink({required this.text, this.isTitle = false});
+  const _FooterLink({required this.text, this.isTitle = false, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: isTitle ? 20 : 12),
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: Text(
-          text,
-          style: GoogleFonts.montserrat(
-            color: isTitle ? Colors.white : Colors.white54,
-            fontSize: isTitle ? 16 : 13,
-            fontWeight: isTitle ? FontWeight.bold : FontWeight.normal,
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: isTitle ? 20 : 12),
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Text(
+            text,
+            style: GoogleFonts.montserrat(
+              color: isTitle ? Colors.white : Colors.white54,
+              fontSize: isTitle ? 16 : 13,
+              fontWeight: isTitle ? FontWeight.bold : FontWeight.normal,
+            ),
           ),
         ),
       ),
